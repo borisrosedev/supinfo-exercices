@@ -1,0 +1,166 @@
+openapi: 3.0.0
+info:
+  title: API
+  version: 1.0.0
+servers:
+  - url: '{protocol}://localhost:3000/api/users'
+    description: 'endpoint pour les users'
+    variables:
+      protocol:
+        enum:
+          - http
+          - https
+        default: http
+  - url: '{protocol}://localhost:3000/api/products'
+    description: 'endpont pour les produits'
+    variables:
+      protocol:
+        enum:
+          - http
+          - https
+        default: http
+
+paths:
+  /products:
+    get:
+      summary: 'Récupérer la liste des produits'
+      responses:
+        '200':
+          description: Succès
+          content: 
+            application/json:
+              example: 
+                type: array
+    put: 
+      summary: 'Créer un nouveau produit'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              items:
+                $ref: '#/components/schemas/Product'
+
+      responses:
+        '201':
+          description: Créé avec succès
+          content:
+            application/json:
+              example:
+                email: olivier@gmail.com
+                password: babar
+    
+  /users:
+    get:
+      summary: Récupérer la liste des utilisateurs
+      responses:
+        '200':
+          description: Succès
+          content:
+            application/json:
+              example:
+                - email: boris@gmai.com
+                  password: caroline
+                - email: caroline@gmail.com
+                  password: boris
+    put:
+      summary: Créer un nouvel utilisateur
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              email: olivier@gmail.com
+              password: babar
+      responses:
+        '201':
+          description: Créé avec succès
+          content:
+            application/json:
+              example:
+                email: olivier@gmail.com
+                password: babar
+  /users/{id}:
+    delete:
+      summary: Supprimer un utilisateur 
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Suppression de l'utilisateur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 4129102012
+    post:
+      summary: Mettre à jour un utilisateur
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          
+      responses:
+        '200':
+          description: Mis à jour
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 4129102012
+                  email:
+                    type: string
+                    example: boris@gmail.com
+                  password: 
+                    type: string 
+                    example: caorline
+components:
+  schemas:
+    Product: 
+      type: object
+      properties:
+        id: 
+          type: string
+          example: "1"
+        price:
+          type: integer
+          example: 2
+        quantity: 
+          type: integer
+          example: 30
+        url: 
+          type: string
+          example: 'https://cdn.pixabay.com/photo/2016/05/12/13/35/cookies-1387826_1280.jpg'
+        
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 4889219291
+        email:
+          type: string
+          example: celine@gmail.com
+        token:
+          type: string 
+          example: 0192LDSLS
+      # Both properties are required
+      required:  
+        - id
+        - email 
+        - password 
+
+     

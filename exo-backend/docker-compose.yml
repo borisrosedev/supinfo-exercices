@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  redis:
+    image: redis/redis-stack
+    ports:
+      - "6379:6379"
+      - "8001:8001"
+    networks:
+      - boris-network
+    volumes:
+      - ./redis_data:/data
+
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    networks:
+      - boris-network
+    volumes:
+      - ./mongodb_data:/data/db
+
+  mongo-gui:
+    image: mongo-express:latest
+    ports:
+      - "8081:8081"
+    networks:
+      - boris-network
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+
+networks:
+  boris-network:
+    driver: bridge
+
+volumes:
+  redis_data:
+  mongodb_data:

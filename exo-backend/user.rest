@@ -1,0 +1,16 @@
+###
+PUT http://localhost:3000/api/users 
+Content-type: application/json
+
+{
+    "email":"boris@gmail.com",
+    "password":"caroline"
+}
+###
+POST http://localhost:3000/api/users 
+Content-Type: application/json
+
+{
+    "email":"caroline@gmail.com",
+    "password":"boris"
+}

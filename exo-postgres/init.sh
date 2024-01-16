@@ -1,0 +1,1 @@
+psql -h hostname -U teacher -d students -f seeding.sql
