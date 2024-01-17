@@ -1,2 +1,42 @@
+@hostname=localhost
+@port=3000
+@host={{hostname}}:{{port}}
+@contentType = application/json;charset=utf-8
+
+### on teste le seeder
+# @name seeder
+GET http://{{host}}/api/seeder
+
+### on teste la fonction de index()
+# @name index()
+GET http://{{host}}/api/products
+
+### on teste la fonction findOneById()
+# @name findOneById()
+GET http://{{host}}/api/products/65a67acb872282ca17e83384
+
+### on teste la fonction findMultipleProductsByPrice()
+# @name findMultipleProductsByPrice()
+GET http://{{host}}/api/products/filter/price?min=0&max=2
+
+### on teste la foncton de triage d'un type de produit en fonction du prix en ordre croissant ou pas
+# @name sortSpecificProductsByPrice()
+GET http://{{host}}/api/products/filter/type-and-price?type=croissant&order=1
+
 ###
-GET http://localhost:3000/api/seeder
+# @name store()
+PUT http://{{host}}/api/products
+Content-Type: {{contentType}}
+
+{
+    "name":"éclair au chocolat",
+    "price": 3,
+    "quantity": 20,
+    "description": "Éclair au chocolat fait par Mamie Jacqueline",
+    "url": "https://cdn.pixabay.com/photo/2023/08/15/19/13/eclair-8192644_1280.png"
+}
+
+
+###
+# @name update()
+

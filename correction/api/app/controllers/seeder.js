@@ -1,7 +1,7 @@
-import client from "../db/connect.js"
+import client from "../db/connect.js";
 import seederProducts from "../db/seeder/01_products.js";
-const database = client.db('shop');
-const products = database.collection('products');
+const database = client.db("shop");
+const products = database.collection("products");
 
 
 
@@ -11,17 +11,17 @@ const SeederController = {
 
         try {
    
-            await products.deleteMany({})
-            const newProducts = await products.insertMany(seederProducts)
-            return res.status(200).json(newProducts)
+            await products.deleteMany({});
+            const newProducts = await products.insertMany(seederProducts);
+            return res.status(200).json(newProducts);
             
         } catch(e){
-            console.trace(e)
-            return next(e)
+            console.trace(e);
+            return next(e);
         }
       
     }
 
-}
+};
 
-export default SeederController
+export default SeederController;

@@ -3,16 +3,8 @@ info:
   title: API
   version: 1.0.0
 servers:
-  - url: '{protocol}://localhost:3000/api/users'
-    description: 'endpoint pour les users'
-    variables:
-      protocol:
-        enum:
-          - http
-          - https
-        default: http
-  - url: '{protocol}://localhost:3000/api/products'
-    description: 'endpont pour les produits'
+  - url: '{protocol}://localhost:3000/api'
+    description: 'préfixe'
     variables:
       protocol:
         enum:
@@ -29,8 +21,11 @@ paths:
           description: Succès
           content: 
             application/json:
-              example: 
-                type: array
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Product'
+
     put: 
       summary: 'Créer un nouveau produit'
       requestBody:
@@ -47,9 +42,8 @@ paths:
           description: Créé avec succès
           content:
             application/json:
-              example:
-                email: olivier@gmail.com
-                password: babar
+              schema:
+                type: object
     
   /users:
     get:
@@ -59,37 +53,32 @@ paths:
           description: Succès
           content:
             application/json:
-              example:
-                - email: boris@gmai.com
-                  password: caroline
-                - email: caroline@gmail.com
-                  password: boris
+              schema:
+                type: array
     put:
       summary: Créer un nouvel utilisateur
       requestBody:
         required: true
         content:
           application/json:
-            example:
-              email: olivier@gmail.com
-              password: babar
+            schema:
+              type: object
       responses:
         '201':
           description: Créé avec succès
           content:
             application/json:
-              example:
-                email: olivier@gmail.com
-                password: babar
+              schema:
+                type: object
   /users/{id}:
     delete:
       summary: Supprimer un utilisateur 
       parameters:
-        - name: id
+        - name: _id
           in: path
           required: true
           schema:
-            type: integer
+            type: string
       responses:
         '200':
           description: Suppression de l'utilisateur
@@ -97,10 +86,7 @@ paths:
             application/json:
               schema:
                 type: object
-                properties:
-                  id:
-                    type: string
-                    example: 4129102012
+                
     post:
       summary: Mettre à jour un utilisateur
       parameters:
@@ -108,33 +94,26 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+            type: object
           
       responses:
         '200':
-          description: Mis à jour
+          description: Succès
           content:
             application/json:
               schema:
                 type: object
-                properties:
-                  id:
-                    type: string
-                    example: 4129102012
-                  email:
-                    type: string
-                    example: boris@gmail.com
-                  password: 
-                    type: string 
-                    example: caorline
+          
 components:
   schemas:
     Product: 
       type: object
       properties:
-        id: 
+        _id: 
+          type: object
+        type: 
           type: string
-          example: "1"
+          example: "croissant"
         price:
           type: integer
           example: 2
@@ -144,12 +123,22 @@ components:
         url: 
           type: string
           example: 'https://cdn.pixabay.com/photo/2016/05/12/13/35/cookies-1387826_1280.jpg'
-        
+     # Both properties are required
+      required:  
+        - quantity
+        - description
+        - price
+        - url 
+        - type
+  
+
+
+
     User:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           example: 4889219291
         email:
           type: string
